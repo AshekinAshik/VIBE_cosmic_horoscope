@@ -1,0 +1,267 @@
+:root {
+    --bg-color: #04050a;
+    --accent-color: #00f0ff;
+    --accent-glow: rgba(0, 240, 255, 0.6);
+    --secondary-accent: #b000ff;
+    --text-primary: #ffffff;
+    --text-secondary: #a0a5b5;
+    --card-bg: rgba(15, 15, 25, 0.4);
+    --card-border: rgba(255, 255, 255, 0.08);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-primary);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 2rem 0;
+    position: relative;
+    overflow-y: auto; 
+    overflow-x: hidden;
+}
+
+/* Starry futuristic background */
+.stars-bg {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: radial-gradient(circle at 50% 50%, #15002b 0%, var(--bg-color) 80%);
+    z-index: -1;
+}
+
+.stars-bg::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 200vw; height: 200vh;
+    background-image: 
+        radial-gradient(2px 2px at 20px 30px, #ffffff, rgba(0,0,0,0)),
+        radial-gradient(2px 2px at 80px 120px, rgba(255,255,255,0.8), rgba(0,0,0,0)),
+        radial-gradient(2px 2px at 150px 80px, rgba(255,255,255,0.4), rgba(0,0,0,0));
+    background-repeat: repeat;
+    background-size: 200px 200px;
+    opacity: 0.2;
+    animation: drift 150s linear infinite;
+}
+
+@keyframes drift {
+    from { transform: translateY(0) translateX(0); }
+    to { transform: translateY(-500px) translateX(-200px); }
+}
+
+.container {
+    width: 100%;
+    max-width: 1050px;
+    padding: 1rem 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+    align-items: center;
+    z-index: 1;
+}
+
+.top-section {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    width: 100%;
+    max-width: 500px;
+}
+
+header {
+    text-align: center;
+    margin-bottom: -1rem;
+}
+
+.glow-text {
+    font-family: 'Orbitron', sans-serif;
+    color: var(--text-primary);
+    text-shadow: 0 0 10px var(--accent-glow), 0 0 20px var(--secondary-accent);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+header h1 { font-size: 2.2rem; margin-bottom: 0.5rem; }
+.subtitle { color: var(--text-secondary); font-size: 0.95rem; letter-spacing: 0.5px; }
+
+/* Glassmorphism Cards */
+.glass-card {
+    background: var(--card-bg);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--card-border);
+    border-radius: 20px;
+    padding: 2.5rem 2rem;
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+    transition: all 0.4s ease;
+}
+
+.input-section { display: flex; flex-direction: column; gap: 1.5rem; }
+label { font-family: 'Orbitron', sans-serif; font-size: 0.85rem; color: var(--accent-color); letter-spacing: 1.5px; text-transform: uppercase; }
+.input-group { display: flex; flex-direction: column; gap: 1.5rem; }
+
+input[type="date"] {
+    background: rgba(0, 0, 0, 0.4);
+    border: 1px solid var(--card-border);
+    color: var(--text-primary);
+    padding: 1rem 1.2rem;
+    border-radius: 12px;
+    font-family: 'Inter', sans-serif;
+    font-size: 1.1rem;
+    outline: none;
+    transition: all 0.3s ease;
+    color-scheme: dark;
+}
+input[type="date"]:valid { border-color: rgba(0, 240, 255, 0.3); }
+input[type="date"]:focus { border-color: var(--accent-color); box-shadow: 0 0 15px var(--accent-glow); }
+
+.neon-button {
+    background: transparent;
+    color: var(--accent-color);
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    padding: 1.2rem;
+    border: 1px solid var(--accent-color);
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    letter-spacing: 2px;
+    position: relative;
+    overflow: hidden;
+}
+.neon-button:hover { background: var(--accent-color); color: var(--bg-color); box-shadow: 0 0 25px var(--accent-glow); transform: translateY(-2px); }
+.neon-button:active { transform: translateY(0); }
+
+.error-msg {
+    color: #ff3366; font-size: 0.85rem; display: none; text-align: center;
+    background: rgba(255, 51, 102, 0.1); padding: 0.5rem; border-radius: 6px; border: 1px solid rgba(255, 51, 102, 0.3);
+}
+
+.result-section { text-align: center; display: flex; flex-direction: column; gap: 1.25rem; }
+.prediction-content strong { color: var(--accent-color); font-weight: 600; }
+.result-section.hidden { display: none; opacity: 0; transform: translateY(20px) scale(0.95); }
+.result-section.visible { display: flex; animation: fadeScaleUp 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
+
+@keyframes fadeScaleUp {
+    from { opacity: 0; transform: translateY(30px) scale(0.95); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.zodiac-display { display: flex; flex-direction: column; align-items: center; gap: 0.8rem; }
+.zodiac-icon {
+    font-size: 4.5rem; line-height: 1; color: var(--secondary-accent);
+    text-shadow: 0 0 20px rgba(176, 0, 255, 0.8), 0 0 40px rgba(176, 0, 255, 0.4); transition: transform 0.5s ease;
+}
+.zodiac-icon:hover { transform: scale(1.1) rotate(5deg); }
+#zodiac-name { font-size: 1.6rem; }
+
+.prediction-content { background: rgba(0, 0, 0, 0.2); padding: 1.5rem; border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.05); }
+.prediction-content h3 { color: var(--accent-color); margin-bottom: 0.8rem; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 2px; font-family: 'Orbitron', sans-serif; }
+.prediction-content p { font-size: 1.05rem; line-height: 1.7; color: var(--text-primary); font-weight: 300; }
+
+.text-button {
+    background: none; border: none; color: var(--text-secondary); font-family: 'Inter', sans-serif;
+    font-size: 0.9rem; cursor: pointer; transition: color 0.3s ease; padding: 0.5rem; position: relative; margin-top: 0.5rem;
+}
+.text-button::after {
+    content: ''; position: absolute; bottom: 0; left: 50%; width: 0; height: 1px;
+    background: var(--text-primary); transition: all 0.3s ease; transform: translateX(-50%);
+}
+.text-button:hover { color: var(--text-primary); }
+.text-button:hover::after { width: 100%; }
+
+/* Map Section */
+.zodiac-map-section {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    background-color: var(--card-bg);
+    background-image: 
+        repeating-radial-gradient(circle at 10% 10%, transparent 0, transparent 40px, rgba(0, 240, 255, 0.08) 41px, transparent 42px),
+        repeating-radial-gradient(circle at 90% 90%, transparent 0, transparent 60px, rgba(176, 0, 255, 0.05) 61px, transparent 62px);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--card-border);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+    border-radius: 20px;
+    padding: 1.5rem 1rem 1.75rem 1rem;
+    overflow: hidden;
+}
+
+.map-header {
+    text-align: center; border-bottom: 1px solid rgba(0, 240, 255, 0.1); padding-bottom: 0.5rem; margin-bottom: 0.5rem; z-index: 10;
+}
+.map-header h3 {
+    font-family: 'Orbitron', sans-serif; color: var(--accent-color); text-transform: uppercase; letter-spacing: 2px; font-size: 1.1rem; text-shadow: 0 0 10px rgba(0, 240, 255, 0.5);
+}
+
+.zodiac-path {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    grid-auto-rows: auto;
+    gap: 1.5rem 0.5rem;
+    position: relative;
+    flex-grow: 1; 
+    align-items: center;
+}
+
+.grid-step {
+    display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer; z-index: 2; transition: transform 0.3s ease;
+}
+.grid-step:hover { transform: translateY(-5px) scale(1.05); }
+
+.path-node {
+    width: 45px; height: 45px; background: rgba(15, 15, 25, 0.9); border: 2px solid rgba(0, 240, 255, 0.5);
+    border-radius: 50%; display: flex; justify-content: center; align-items: center; flex-shrink: 0;
+    transition: all 0.3s ease; box-shadow: inset 0 0 10px rgba(0, 240, 255, 0.2), 0 0 10px rgba(0,0,0,0.5); z-index: 5; position: relative;
+}
+.grid-step:hover .path-node { box-shadow: 0 0 20px var(--accent-glow); background: var(--accent-color); border-color: var(--bg-color); }
+.grid-step:hover .path-node span { color: var(--bg-color); text-shadow: none; }
+.path-node span { font-size: 1.4rem; color: var(--secondary-accent); text-shadow: 0 0 5px rgba(176, 0, 255, 0.6); }
+
+.path-info {
+    background: rgba(10, 10, 15, 0.85); padding: 0.4rem 0.5rem; border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.05);
+    text-align: center; margin-top: 0.5rem; backdrop-filter: blur(4px); pointer-events: none; width: 100%;
+}
+.path-info strong { color: var(--text-primary); font-family: 'Orbitron', sans-serif; font-size: 0.8rem; letter-spacing: 0.5px; display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.path-info div { color: var(--text-secondary); font-size: 0.7rem; margin-top: 0.15rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+/* Hover Tooltip */
+.map-tooltip {
+    position: fixed; pointer-events: none; background: rgba(10, 10, 15, 0.95); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--accent-color); box-shadow: 0 8px 32px rgba(0, 0, 0, 0.8), 0 0 15px rgba(0, 240, 255, 0.3); border-radius: 12px;
+    padding: 1.2rem; color: var(--text-primary); font-family: 'Inter', sans-serif; font-size: 0.9rem; max-width: 250px; line-height: 1.6; z-index: 1000;
+    opacity: 0; transform: scale(0.9) translateY(10px); transition: opacity 0.2s ease, transform 0.2s ease;
+}
+.map-tooltip.visible { opacity: 1; transform: scale(1) translateY(0); }
+.map-tooltip strong { color: var(--accent-color); font-family: 'Orbitron', sans-serif; font-size: 1rem; display: block; margin-bottom: 0.6rem; text-transform: uppercase; letter-spacing: 1px; border-bottom: 1px dashed rgba(255, 255, 255, 0.1); padding-bottom: 0.4rem; }
+
+/* Responsive Adjustments */
+@media (max-width: 900px) {
+    .container { padding: 1.5rem 1rem; gap: 2rem; }
+    .zodiac-path { grid-template-columns: repeat(4, 1fr); gap: 1.5rem 0.5rem; }
+    .zodiac-map-section { padding: 1rem; }
+}
+
+@media (max-width: 600px) {
+    header h1 { font-size: 1.8rem; }
+    .top-section { max-width: 100%; }
+    .glass-card { padding: 1.5rem 1rem; }
+    .zodiac-path { grid-template-columns: repeat(3, 1fr); gap: 1.5rem 0.25rem; }
+    .path-node { width: 35px; height: 35px; }
+    .path-node span { font-size: 1.1rem; }
+    .path-info { padding: 0.3rem; margin-top: 0.3rem; }
+    .path-info strong { font-size: 0.7rem; }
+    .path-info div { font-size: 0.6rem; }
+}
+
+@media (max-width: 400px) {
+    .zodiac-path { grid-template-columns: repeat(2, 1fr); gap: 2rem 0.5rem; }
+}

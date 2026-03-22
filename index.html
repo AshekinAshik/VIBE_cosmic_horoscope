@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cosmic Horoscope</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="stars-bg"></div>
+    <main class="container">
+        
+        <header>
+            <h1 class="glow-text">Cosmic Destiny</h1>
+            <p class="subtitle">Discover what the universe aligned for you.</p>
+        </header>
+
+        <section class="top-section">
+            <div class="input-section glass-card">
+                <div class="input-group">
+                    <label for="dob">Enter your Date of Birth</label>
+                    <input type="date" id="dob" required value="2000-01-01">
+                    <div id="error-msg" class="error-msg">Please select a valid date to align with the stars.</div>
+                </div>
+                <button id="predict-btn" class="neon-button">Reveal Destiny</button>
+            </div>
+
+            <div id="result-section" class="result-section glass-card hidden">
+                <div class="zodiac-display">
+                    <span id="zodiac-icon" class="zodiac-icon">♑</span>
+                    <h2 id="zodiac-name" class="glow-text">Capricorn</h2>
+                </div>
+                <!-- About Today block -->
+                <div class="prediction-content">
+                    <h3>About Today</h3>
+                    <p id="daily-prediction"></p>
+                </div>
+                <!-- About Partner block -->
+                <div class="prediction-content" style="margin-top: 1rem;">
+                    <h3>About Partner</h3>
+                    <p><strong><span id="partner-name"></span></strong> - <span id="partner-reason"></span></p>
+                </div>
+                <button id="reset-btn" class="text-button">Check Another Date</button>
+            </div>
+        </section>
+
+        <!-- Stacks under the date selection naturally now -->
+        <section class="zodiac-map-section">
+            <div class="map-header">
+                <h3>Zodiac Star Path</h3>
+            </div>
+            <div style="position: relative; width: 100%; flex-grow: 1;">
+                <svg id="path-line" style="position: absolute; top: 0; left: 0; z-index: 1; pointer-events: none;"></svg>
+                <div id="zodiac-path" class="zodiac-path">
+                    <!-- Path nodes will spawn here via JS -->
+                </div>
+            </div>
+        </section>
+
+    </main>
+    <script src="script.js"></script>
+</body>
+</html>
